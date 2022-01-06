@@ -18,7 +18,7 @@ fi
 ####################################
 # Operating System (Linux) upgrade #
 ####################################
-
+{
 while true; do
         read -p "Updating Operating System (Linux)? (yes or no): " INPUT
                 if [ "$INPUT" = "no" ]; then
@@ -35,7 +35,6 @@ while true; do
                 fi
 
 
-
 #################################
 # Node software upgrade section #
 #################################
@@ -44,7 +43,7 @@ while true; do
 read -p "Enter version: " nversion
         echo "Installing" $nversion", meantime enjoy the coffee :)"
         sleep 2
-        echo "Stopping the node..."
+        echo "stopping the node..."
         sudo systemctl stop cnode
         sleep 10
         echo "Starting the node version upgrade!"
@@ -71,4 +70,6 @@ read -p "Enter version: " nversion
         sleep 2
         cd $CNODE_HOME/scripts
         ./gLiveView.sh
+break
 done
+}

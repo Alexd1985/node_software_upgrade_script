@@ -43,7 +43,7 @@ while true; do
 read -p "Enter version: " nversion
         echo "Installing" $nversion", meantime enjoy the coffee :)"
         sleep 2
-        echo "stopping the node..."
+        echo "Stopping the node..."
         sudo systemctl stop cnode
         sleep 10
         echo "Starting the node version upgrade!"

@@ -41,7 +41,7 @@ while true; do
 #################################
 
 
-read -p "Enter version : " nversion
+read -p "Enter version: " nversion
         echo "Installing" $nversion", meantime enjoy the coffee :)"
         sleep 2
         echo "Stopping the node..."

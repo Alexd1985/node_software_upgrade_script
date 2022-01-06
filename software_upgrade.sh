@@ -22,7 +22,7 @@ fi
 while true; do
         read -p "Updating Operating System (Linux)? (yes or no): " INPUT
                 if [ "$INPUT" = "no" ]; then
-                        echo "skipped! The software upgrade will continue without updating the Operating System... please wait"
+                        echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
                         sleep 2
                 elif [ "$INPUT" = "yes" ]; then
                         echo "Updating Operating System (Linux)... please wait"
@@ -44,7 +44,7 @@ while true; do
 read -p "Enter version : " nversion
         echo "Installing" $nversion", meantime enjoy the coffee :)"
         sleep 2
-        echo "stopping the node..."
+        echo "Stopping the node..."
         sudo systemctl stop cnode
         sleep 10
         echo "Starting the node version upgrade!"

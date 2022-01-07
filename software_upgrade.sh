@@ -27,6 +27,8 @@ while true; do
                 elif [ "$INPUT" = "yes" ]; then
                         echo "Updating Operating System (Linux)... please wait"
                         sleep 2
+                        sudo apt-get update
+                        sudo apt-get upgrade
                 else
                         echo  "yes or no"
                         continue

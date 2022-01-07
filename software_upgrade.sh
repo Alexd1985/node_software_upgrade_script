@@ -90,7 +90,7 @@ fi
         echo "The software upgrade is succesfully, starting the node"
         sudo systemctl start cnode
         sleep 10
-        echo "The node has been started...opening gLiveView!"
+        echo "The node has been started... opening gLiveView!"
         sleep 3
         cd $CNODE_HOME/scripts
         ./gLiveView.sh

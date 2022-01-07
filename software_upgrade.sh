@@ -20,20 +20,20 @@ fi
 ####################################
 {
 while true; do
-        read -p "Updating Operating System (Linux)? (yes or no): " INPUT
+                read -p "Updating Operating System (Linux)? (yes or no): " INPUT
                 if [ "$INPUT" = "no" ]; then
                         echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
                         sleep 2
                 elif [ "$INPUT" = "yes" ]; then
                         echo "Updating Operating System (Linux)... please wait"
                         sleep 2
-                        sudo apt-get update
-                        sudo apt-get upgrade
                 else
                         echo  "yes or no"
                         continue
                 fi
-
+break
+done
+}
 
 #################################
 # Node software upgrade section #
@@ -41,15 +41,39 @@ while true; do
 
 
 read -p "Enter version: " nversion
-        echo "Installing" $nversion", meantime enjoy the coffee :)"
+        echo "Checking for current version, please wait..."
         sleep 2
+        sversion=$(cardano-node --version | grep node | cut -c13-20)
+        echo "Current version running:" $sversion
+
+if [ $sversion = $nversion ]; then
+                        sleep 5
+        {
+        while true; do
+                        read -p "Version already installed, do you want to continue anyway? (yes or no) "  INPUT
+                        if [ "$INPUT" = "no" ]; then
+                        echo "Upgrade skipped, software" $nversion "already installed!"
+                        sleep 5
+                        exit 1
+                        elif [ "$INPUT" = "yes" ]; then
+                        echo "Upgrading to" $nversion...
+                        sleep 5
+                        else
+                        echo  "yes or no"
+                        continue
+                        fi
+        break
+        done
+        }
+
+fi
+
+
+        echo "Upgrade started, it will take a while, meantime you can enjoy the coffee :)"
+        sleep 5
         echo "Stopping the node..."
         sudo systemctl stop cnode
         sleep 10
-        echo "Starting the node version upgrade!"
-        sleep 2
-
-
                 cabal update
                 cd ~/git
                 sudo rm -R cardano-node
@@ -63,13 +87,10 @@ read -p "Enter version: " nversion
         echo -e "package cardano-crypto-praos\n  flags: -external-libsodium-vrf" > cabal.project.local
         $CNODE_HOME/scripts/cabal-build-all.sh
 
-        echo "Software upgrade successfully installed, starting the node"
+        echo "The software upgrade is succesfully, starting the node"
         sudo systemctl start cnode
         sleep 10
         echo "The node has been started...opening gLiveView!"
-        sleep 2
+        sleep 3
         cd $CNODE_HOME/scripts
         ./gLiveView.sh
-break
-done
-}

@@ -63,7 +63,7 @@ read -p "Enter version: " nversion
         echo -e "package cardano-crypto-praos\n  flags: -external-libsodium-vrf" > cabal.project.local
         $CNODE_HOME/scripts/cabal-build-all.sh
 
-        echo "The software upgrade is succesfully, starting the node"
+        echo "Software upgrade successfully installed, starting the node"
         sudo systemctl start cnode
         sleep 10
         echo "The node has been started...opening gLiveView!"

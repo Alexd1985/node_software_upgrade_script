@@ -20,7 +20,7 @@ fi
 ####################################
 {
 while true; do
-                read -p "Updating Operating System (Linux)? (yes or no): " INPUT
+                read -p "Update Operating System (Linux)? (yes or no): " INPUT
                 if [ "$INPUT" = "no" ]; then
                         echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
                         sleep 2
@@ -71,7 +71,7 @@ if [ $sversion = $nversion ]; then
 fi
 
 
-        echo "Upgrade started, it will take a while, meantime you can enjoy the coffee :)"
+        echo "Upgrade started, it will take a while, meantime you can enjoy some coffee :)"
         sleep 5
         echo "Stopping the node..."
         sudo systemctl stop cnode
@@ -89,7 +89,7 @@ fi
         echo -e "package cardano-crypto-praos\n  flags: -external-libsodium-vrf" > cabal.project.local
         $CNODE_HOME/scripts/cabal-build-all.sh
 
-        echo "The software upgrade is succesfully, starting the node"
+        echo "The software upgrade is succesful, starting the node"
         sudo systemctl start cnode
         sleep 10
         echo "The node has been started... opening gLiveView!"

@@ -102,7 +102,7 @@ fi
          echo "Starting cardano-node software upgrade, it will take a while, meantime you can enjoy some coffee :)"
                $CNODE_HOME/scripts/cabal-build-all.sh
 
-        echo "The software upgrade is succesfully, starting the node"
+        echo "Software upgrade completed successfully , starting cardano-node... "
                 sudo systemctl start cnode
                 sleep 10
         cd $CNODE_HOME/scripts
@@ -110,7 +110,7 @@ fi
 {
 while true; do
 
-        read -p "The node has been started, do you want to open gLiveView? (yes or no): " INPUT
+        read -p "cardano-node started, do you want to open gLiveView? (yes or no): " INPUT
                 if [ "$INPUT" = "no" ]; then
                         echo "Good-bye!"
                         exit 1

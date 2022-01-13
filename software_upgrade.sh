@@ -1,5 +1,5 @@
 #!/bin/bash
-backtitle="EZ NODE UPDATER, brought to you by CHRTY and CHAOS"
+backtitle="EZ NODE UPDATER"
 
 ###################################
 # sudo password for sudo commands #

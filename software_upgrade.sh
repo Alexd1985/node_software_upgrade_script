@@ -47,9 +47,11 @@ available=$(curl --stderr - https://github.com/input-output-hk/cardano-node/tags
 # show list of releases in menu
 selection=$(dialog --backtitle "$backtitle" --output-fd 1 --title "Select release to install" \
         --menu "Available recent releases:" 20 40 10 $available)
-
+clear
 # if nothing is selected, quit
 if [ -z $selection ]; then
+  clear
+  echo "caradano-node software upgrade canceled"
   exit 1
 fi
 

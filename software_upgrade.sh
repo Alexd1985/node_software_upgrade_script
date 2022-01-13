@@ -48,6 +48,11 @@ available=$(curl --stderr - https://github.com/input-output-hk/cardano-node/tags
 selection=$(dialog --backtitle "$backtitle" --output-fd 1 --title "Select release to install" \
         --menu "Available recent releases:" 20 40 10 $available)
 
+# if nothing is selected, quit
+if [ -z $selection ]; then
+  exit 1
+fi
+
 # grab the version number corresponding to the selected version
 version=$(grep "${selection}" <<< "$available" | \
         sed -e 's/[0-9]: //' | \

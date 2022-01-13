@@ -19,22 +19,20 @@ fi
 # Operating System (Linux) upgrade #
 ####################################
 {
-while true; do
-                read -p "Update Operating System (Linux)? (yes or no): " INPUT
-                if [ "$INPUT" = "no" ]; then
-                        echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
-                        sleep 3
-                elif [ "$INPUT" = "yes" ]; then
-                        echo "Updating Operating System (Linux)... please wait"
-                        sleep 3
-                        sudo apt-get update        # command is used to download package information from all configured sources.
-                        sudo apt-get upgrade       # You run sudo apt-get upgrade to install available upgrades of all packages currently installed on the system from the sources configured via sources. list file. New packages will be installed if required to satisfy dependencies, but existing packages will never be removed
-                else
-                        echo  "yes or no"
-                        continue
-                fi
-break
-done
+        read -p "Update Operating System (Linux)? (yes or [no]): " INPUT
+
+        case $INPUT in
+          y|yes)
+                echo "Updating Operating System (Linux)... please wait"
+                sleep 3
+                sudo apt-get update        # command is used to download package information from all configured sources.
+                sudo apt-get upgrade       # You run sudo apt-get upgrade to install available upgrades of all packages currently installed on the system from the sources configured via sources. list file. New packages will be installed if required to satisfy dependencies, but existing packages will never be removed
+                ;;
+        *)
+                echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
+                sleep 3
+                ;;
+        esac
 }
 
 #################################

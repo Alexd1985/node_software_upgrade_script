@@ -1,5 +1,5 @@
 #!/bin/bash
-
+backtitle="EZ NODE UPDATER, brought to you by CHRTY and CHAOS"
 
 ###################################
 # sudo password for sudo commands #
@@ -12,8 +12,6 @@ sudo -p "The script needs the admin/sudo password to continue, please enter: " d
             exit 1
         fi
 fi
-
-
 
 ####################################
 # Operating System (Linux) upgrade #
@@ -40,34 +38,27 @@ fi
 #################################
 
 cd ~/git/cardano-node
-{
 
-while true; do
+# get list of recent releases
+# TODO: handle no-connect errors
+available=$(curl --stderr - https://github.com/input-output-hk/cardano-node/tags | \
+        grep "<a href=\"/input-output-hk/cardano-node/releases/tag/" | \
+        sed -e 's/.*\"\/input-output-hk\/cardano-node\/releases\/tag\/\(.*\)\".*/\1/' | \
+        while read line; do n=$((++n)) && echo "$n: " "$line "; done)
 
-        echo
-        echo 10 most recent releases from https://github.com/input-output-hk/cardano-node
-        echo
+# show list of releases in menu
+selection=$(dialog --backtitle "$backtitle" --output-fd 1 --title "Select release to install" \
+        --menu "Available recent releases:" 20 40 10 $available)
 
-        curl --stderr - https://github.com/input-output-hk/cardano-node/tags | \
-                grep "<a href=\"/input-output-hk/cardano-node/releases/tag/" | \
-                sed -e 's/.*\"\/input-output-hk\/cardano-node\/releases\/tag\/\(.*\)\".*/\1/'
-        echo
-
-        TAGS=$(git tag)
-        read -p "Enter version to install: " version
-                if [[ $TAGS == *"$version"* ]]; then            # checking if the version entered is available on github
-                        echo "Version valid"
-                        sleep 3
-                else
-                        echo "Version invalid, enter a valid version: "
-                        continue
-                fi
-        break
-        done
-}
+# grab the version number corresponding to the selected version
+version=$(grep "${selection}" <<< "$available" | \
+        sed -e 's/[0-9]: //' | \
+        sed -e 's/ //')
+echo Selected version: $version
 
 echo "Checking for current version, please wait... "
 sleep 3
+# TODO: handle exception if cardano-node is not installed/found!
 current_version=$(cardano-node --version | grep node | cut -c13-20)     # checking for the version running on server
 echo "Current version running:" $current_version
 

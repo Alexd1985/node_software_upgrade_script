@@ -1,5 +1,5 @@
 #!/bin/bash
-
+backtitle="EZ NODE UPDATER"
 
 ###################################
 # sudo password for sudo commands #
@@ -13,53 +13,50 @@ sudo -p "The script needs the admin/sudo password to continue, please enter: " d
         fi
 fi
 
-
-
 ####################################
 # Operating System (Linux) upgrade #
 ####################################
-{
-while true; do
-                read -p "Update Operating System (Linux)? (yes or no): " INPUT
-                if [ "$INPUT" = "no" ]; then
-                        echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
-                        sleep 3
-                elif [ "$INPUT" = "yes" ]; then
-                        echo "Updating Operating System (Linux)... please wait"
-                        sleep 3
-                        sudo apt-get update        # command is used to download package information from all configured sources.
-                        sudo apt-get upgrade       # You run sudo apt-get upgrade to install available upgrades of all packages currently installed on the system from the sources configured via sources. list file. New packages will be installed if required to satisfy dependencies, but existing packages will never be removed
-                else
-                        echo  "yes or no"
-                        continue
-                fi
-break
-done
-}
+read -p "Update Operating System (Linux)? (yes or [no]): " INPUT
+
+case $INPUT in
+  y|yes)
+        echo "Updating Operating System (Linux)... please wait"
+        sleep 3
+        sudo apt-get update        # command is used to download package information from all configured sources.
+        sudo apt-get upgrade       # You run sudo apt-get upgrade to install available upgrades of all packages currently installed on the system from the sources configured via sources. list file. New packages will be installed if required to satisfy dependencies, but existing packages will never be removed
+        ;;
+*)
+        echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
+        sleep 3
+        ;;
+esac
 
 #################################
 # Node software upgrade section #
 #################################
 
 cd ~/git/cardano-node
-{
-while true; do
 
-        TAGS=$(git tag)
-        read -p "Enter version: " version
-                if [[ $TAGS == *"$version"* ]]; then            # checking if the version entered is available on github
-                        echo "Version valid"
-                        sleep 3
-                else
-                        echo "Version invalid, enter a valid version: "
-                        continue
-                fi
-        break
-        done
-}
+# get list of recent releases
+# TODO: handle no-connect errors
+available=$(curl --stderr - https://github.com/input-output-hk/cardano-node/tags | \
+        grep "<a href=\"/input-output-hk/cardano-node/releases/tag/" | \
+        sed -e 's/.*\"\/input-output-hk\/cardano-node\/releases\/tag\/\(.*\)\".*/\1/' | \
+        while read line; do n=$((++n)) && echo "$n: " "$line "; done)
+
+# show list of releases in menu
+selection=$(dialog --backtitle "$backtitle" --output-fd 1 --title "Select release to install" \
+        --menu "Available recent releases:" 20 40 10 $available)
+
+# grab the version number corresponding to the selected version
+version=$(grep "${selection}" <<< "$available" | \
+        sed -e 's/[0-9]: //' | \
+        sed -e 's/ //')
+echo Selected version: $version
 
 echo "Checking for current version, please wait... "
 sleep 3
+# TODO: handle exception if cardano-node is not installed/found!
 current_version=$(cardano-node --version | grep node | cut -c13-20)     # checking for the version running on server
 echo "Current version running:" $current_version
 

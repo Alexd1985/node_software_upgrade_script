@@ -41,10 +41,20 @@ fi
 
 cd ~/git/cardano-node
 {
+
 while true; do
 
+        echo
+        echo 10 most recent releases from https://github.com/input-output-hk/cardano-node
+        echo
+
+        curl --stderr - https://github.com/input-output-hk/cardano-node/tags | \
+                grep "<a href=\"/input-output-hk/cardano-node/releases/tag/" | \
+                sed -e 's/.*\"\/input-output-hk\/cardano-node\/releases\/tag\/\(.*\)\".*/\1/'
+        echo
+
         TAGS=$(git tag)
-        read -p "Enter version: " version
+        read -p "Enter version to install: " version
                 if [[ $TAGS == *"$version"* ]]; then            # checking if the version entered is available on github
                         echo "Version valid"
                         sleep 3

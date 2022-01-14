@@ -61,6 +61,8 @@ selection=$(dialog --backtitle "$backtitle" --output-fd 1 --title "Select releas
 
 # if nothing is selected, quit
 if [ -z $selection ]; then
+  clear
+  echo "caradano-node software upgrade canceled"
   exit 1
 fi
 

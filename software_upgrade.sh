@@ -109,7 +109,6 @@ if [ $current_version = $version ]; then {
 
   echo "Software upgrade completed successfully , starting cardano-node... "
   sudo systemctl start cnode
-  cd $CNODE_HOME/scripts
 } | dialog --title "Updating cardano-node" --progressbox 30 100
 
 dialog --backtitle "$backtitle" --output-fd 1 --title "start gLiveView?" \
@@ -117,6 +116,7 @@ dialog --backtitle "$backtitle" --output-fd 1 --title "start gLiveView?" \
 
 case $? in
   0)
+    cd $CNODE_HOME/scripts
     ./gLiveView.sh
     ;;
   *)

@@ -31,9 +31,37 @@ case $INPUT in
         ;;
 esac
 
+###################
+# Running prereqs #
+###################
+
+{
+while true; do
+
+        read -p "Do you want to run prereqs? (yes or no): " INPUT
+                if [ "$INPUT" = "no" ]; then
+                        echo "Prereqs skipped!"
+                        exit 1
+                elif [ "$INPUT" = "yes" ]; then
+                        echo "Downloading the latest prereqs file..."
+                        sleep 3
+                        cd ~/tmp
+                        rm prereqs.sh
+                        wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh
+                        chmod 750 prereqs.sh
+                        ./prereqs.sh
+                else
+                        echo  "yes or no"
+                        continue
+                fi
+        break
+        done
+}
+
 #################################
 # Node software upgrade section #
 #################################
+
 
 cd ~/git/cardano-node
 

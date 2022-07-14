@@ -47,7 +47,7 @@ while true; do
                         sleep 3
                         cd ~/tmp
                         rm prereqs.sh
-                        wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh
+                        https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
                         chmod 750 prereqs.sh
                         ./prereqs.sh
                 else

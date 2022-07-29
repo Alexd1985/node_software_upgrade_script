@@ -35,28 +35,23 @@ esac
 # Running prereqs #
 ###################
 
-{
-while true; do
+read -p "Update prereqs? (yes or [no]): " INPUT
 
-        read -p "Do you want to run prereqs? (yes or no): " INPUT
-                if [ "$INPUT" = "no" ]; then
-                        echo "Prereqs skipped!"
-                        exit 1
-                elif [ "$INPUT" = "yes" ]; then
-                        echo "Downloading the latest prereqs file..."
-                        sleep 3
-                        cd ~/tmp
-                        rm prereqs.sh
-                        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
-                        chmod 750 prereqs.sh
-                        ./prereqs.sh
-                else
-                        echo  "yes or no"
-                        continue
-                fi
-        break
-        done
-}
+case $INPUT in
+  y|yes)
+        echo "Downloading the latest prereqs file..."
+            sleep 3
+            cd ~/tmp
+            rm prereqs.sh                                                                                                                #  command will delete the old prereqs.sh file
+            wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh      #  command will download the newest prereqs file
+                        chmod 750 prereqs.sh                                                                                             #  command will change the permissions
+                        ./prereqs.sh                                                                                                     #  command will run the file/script
+        ;;
+*)
+        echo "Skipped! The software upgrade will continue without updating the prereqs... please wait"
+        sleep 3
+        ;;
+esac
 
 #################################
 # Node software upgrade section #

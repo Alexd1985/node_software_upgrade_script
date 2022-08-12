@@ -39,18 +39,19 @@ read -p "Update prereqs? (yes or [no]): " INPUT
 
 case $INPUT in
   y|yes)
+        {
         read -p "Update prereqs from MASTER or ALPHA (test) branch? (master or [alpha]): " INPUT
 
-case $INPUT in
-  m|master)
-        {
-           echo "Downloading the latest prereqs file from MASTER branch... please wait"
-            sleep 3
-            cd ~/tmp
-            rm prereqs.sh                                                                                                                #  command will delete the old prereqs.sh file
-            wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh      #  command will download the newest prereqs file from MASTER branch
-                        chmod 750 prereqs.sh                                                                                             #  command will change the permissions
-                        ./prereqs.sh                                                                                                     #  command will run the file/script
+     case $INPUT in
+     m|master)
+        
+         echo "Downloading the latest prereqs file from MASTER branch... please wait"
+         sleep 3
+         cd ~/tmp
+         rm prereqs.sh                                                                                                                #  command will delete the old prereqs.sh file
+         wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh      #  command will download the newest prereqs file from MASTER branch
+         chmod 750 prereqs.sh                                                                                             #  command will change the permissions
+         ./prereqs.sh                                                                                                     #  command will run the file/script
         ;;
 *)
         

@@ -38,40 +38,36 @@ esac
 read -p "Update prereqs? (yes or [no]): " INPUT
 
 case $INPUT in
-y|yes)
-{
-read -p "Update prereqs from MASTER or ALPHA (test) branch? (master or [alpha>
-case $INPUT in
-a|alpha)
+    y|yes)
+        {
+        cd ~/tmp
+        rm prereqs.sh
 
-echo "Downloading the latest prereqs file from ALPHA branch... please wait"
-sleep 3
-rm prereqs.sh
-wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh
-chmod 750 prereqs.sh
-./prereqs.sh
-;;
+        read -p "Update prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): "
+        case $INPUT in
+            a|alpha)
+                echo "Downloading the latest prereqs file from ALPHA branch, please wait"
+                sleep 3
+                wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh
+                ;;
 
-*)
-echo "Downloading the latest prereqs file from MASTER branch... please wait"
-sleep 3
-cd ~/tmp
-rm prereqs.sh
-wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
-chmod 750 prereqs.sh 
-./prereqs.sh>
-;;
-esac
+            *)
+                echo "Downloading the latest prereqs file from MASTER branch, please wait"
+                sleep 3
+                wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
+                ;;
+        esac
 
+        chmod +x prereqs.sh
+        ./prereqs.sh
+        }
+        ;;
 
-}
-;;
-
-*)
-{
-echo "Skipped! The software upgrade will continue without updating the prereq>sleep 3
-;;
-}
+    *)
+        {
+        echo "Skipped! The software upgrade will continue without updating the prereq>sleep 3
+        }
+        ;;
 esac
 
 #################################

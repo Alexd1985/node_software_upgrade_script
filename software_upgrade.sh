@@ -55,7 +55,7 @@ case $INPUT in
                 echo "Downloading the latest files/scripts from MASTER branch, please wait"
                 sleep 3
                 ./prereqs.sh
-                ;e;
+                ;;
         esac
         }
         ;;

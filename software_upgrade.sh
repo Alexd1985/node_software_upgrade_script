@@ -46,14 +46,16 @@ a|alpha)
 
 echo "Downloading the latest prereqs file from ALPHA branch... please wait"
 sleep 3
-rm prereqs.sh>wget https://raw.githubusercontent.com/cardano-community/guild-operators/%3Echmod 750 prereqs.sh>#./prereqs.sh
+rm prereqs.sh
+wget https://raw.githubusercontent.com/cardano-community/guild-operators/%3Echmod 750 prereqs.sh>#./prereqs.sh
 ;;
 
 *)
 echo "Downloading the latest prereqs file from MASTER branch... please wait"
 sleep 3
 cd ~/tmp
-rm prereqs.sh>wget https://raw.githubusercontent.com/cardano-community/guild-operators/mas%3Echmod 750 prereqs.sh> # ./prereqs.sh>
+rm prereqs.sh
+wget https://raw.githubusercontent.com/cardano-community/guild-operators/mas%3Echmod 750 prereqs.sh> # ./prereqs.sh>
 ;;
 esac
 

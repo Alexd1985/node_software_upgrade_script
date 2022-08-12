@@ -43,7 +43,7 @@ case $INPUT in
         cd ~/tmp
         rm prereqs.sh
 
-        read -p "Update prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): "
+        read -p "Update prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): " INPUT
         case $INPUT in
             a|alpha)
                 echo "Downloading the latest prereqs file from ALPHA branch, please wait"

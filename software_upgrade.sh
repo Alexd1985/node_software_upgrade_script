@@ -65,7 +65,8 @@ case $INPUT in
 
     *)
         {
-        echo "Skipped! The software upgrade will continue without updating the prereq>sleep 3
+        echo "Skipped! The software upgrade will continue without updating the prereq"
+sleep 3
         }
         ;;
 esac

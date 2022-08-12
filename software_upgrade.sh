@@ -41,25 +41,22 @@ case $INPUT in
     y|yes)
         {
         cd ~/tmp
-        rm prereqs.sh
+   
 
         read -p "Update prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): " INPUT
         case $INPUT in
             a|alpha)
-                echo "Downloading the latest prereqs file from ALPHA branch, please wait"
+                echo "Downloading the latest files/scripts from ALPHA branch, please wait"
                 sleep 3
-                wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh
+               ./prereqs.sh -b alpha
                 ;;
 
             *)
-                echo "Downloading the latest prereqs file from MASTER branch, please wait"
+                echo "Downloading the latest files/scripts from MASTER branch, please wait"
                 sleep 3
-                wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
-                ;;
+                ./prereqs.sh
+                ;e;
         esac
-
-        chmod +x prereqs.sh
-        ./prereqs.sh
         }
         ;;
 

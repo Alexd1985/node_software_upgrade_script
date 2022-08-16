@@ -41,12 +41,12 @@ case $INPUT in
     y|yes)
         {
         cd ~/tmp
-        rm prereqs.sh
-        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
-        chmod +x software_upgrade.sh
+        rm prereqs.sh                                                                                                            # this command will delete the last/old prereqs file
+        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
+        chmod +x prereqs.sh                                                                                                      # this command will make the file executable
    
 
-        read -p "Update prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): " INPUT
+        read -p "Run prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): " INPUT
         case $INPUT in
             a|alpha)
                 echo "Downloading the latest files/scripts from ALPHA branch, please wait"

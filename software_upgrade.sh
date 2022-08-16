@@ -41,6 +41,9 @@ case $INPUT in
     y|yes)
         {
         cd ~/tmp
+        rm prereqs.sh
+        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh
+        chmod +x software_upgrade.sh
    
 
         read -p "Update prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): " INPUT

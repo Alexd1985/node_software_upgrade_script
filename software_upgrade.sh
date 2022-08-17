@@ -42,7 +42,7 @@ case $INPUT in
         {
         cd ~/tmp
         rm prereqs.sh                                                                                                            # this command will delete the last/old prereqs file
-        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
+        wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
         chmod +x prereqs.sh                                                                                                      # this command will make the file executable
    
 

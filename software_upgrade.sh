@@ -39,35 +39,25 @@ read -p "Update prereqs? (yes or [no]): " INPUT
 
 case $INPUT in
     y|yes)
-        {
+       
         cd ~/tmp
         rm prereqs.sh                                                                                                            # this command will delete the last/old prereqs file
-        wget https://raw.githubusercontent.com/cardano-community/guild-operators/alpha/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
+        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
         chmod +x prereqs.sh                                                                                                      # this command will make the file executable
    
-
-        read -p "Run prereqs from MASTER or ALPHA (test) branch? ([master] or alpha): " INPUT
-        case $INPUT in
-            a|alpha)
-                echo "Downloading the latest files/scripts from ALPHA branch, please wait"
-                sleep 3
-               ./prereqs.sh -b alpha
-                ;;
-
-            *)
-                echo "Downloading the latest files/scripts from MASTER branch, please wait"
+                echo "Downloading the latest files/scripts, please wait"
                 sleep 3
                 ./prereqs.sh
-                ;;
-        esac
-        }
+                
+        
+        
         ;;
 
     *)
-        {
-        echo "Skipped! The software upgrade will continue without updating the prereq"
+        
+        echo "Skipped! The software upgrade will continue without updating the prereqs"
 sleep 3
-        }
+        
         ;;
 esac
 

@@ -1,6 +1,8 @@
 #!/bin/bash
 backtitle="EZ NODE UPDATER"
 
+# test
+
 ###################################
 # sudo password for sudo commands #
 ###################################

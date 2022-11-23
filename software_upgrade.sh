@@ -1,7 +1,73 @@
 #!/bin/bash
+# shellcheck disable=SC2086,SC1090,SC2059
+# shellcheck source=/dev/null
+
 backtitle="EZ NODE UPDATER"
 
-# test
+
+##########################################
+# User Variables - Change as desired     #
+# command line flags override set values #
+##########################################
+CURL_TIMEOUT=60        # Maximum time in seconds that you allow the file download operation to take before aborting (Default: 60s)
+UPDATE_CHECK='N'       # Check if there is an updated version of software upgrade script to download
+
+
+
+#######################
+#  CHECK FOR UPDATES  #
+#######################
+
+shift $((OPTIND -1))
+
+[[ -z ${CURL_TIMEOUT} ]] && CURL_TIMEOUT=60
+[[ -z ${UPDATE_CHECK} ]] && UPDATE_CHECK='Y'
+
+get_input() {
+  printf "%s (default: %s): " "$1" "$2" >&2; read -r answer
+  if [ -z "$answer" ]; then echo "$2"; else echo "$answer"; fi
+}
+
+get_answer() {
+  printf "%s (yes/no): " "$*" >&2; read -r answer
+  while : 
+  do
+    case $answer in
+    [Yy]*)
+      return 0;;
+    [Nn]*)
+      return 1;;
+    *) printf "%s" "Please enter 'yes' or 'no' to continue: " >&2; read -r answer
+    esac
+  done
+}
+
+URL_RAW="https://raw.githubusercontent.com/Alexd1985/node_software_upgrade_script/main/software_upgrade.sh"
+
+# Check if software_upgrade.sh update is available
+PARENT="/opt/cardano/cnode/scripts"
+if [[ ${UPDATE_CHECK} = 'Y' ]] && curl -s -f -m ${CURL_TIMEOUT} -o "${PARENT}"/software_upgrade.sh.tmp ${URL_RAW} 2>/dev/null; then
+  TEMPL_CMD=$(awk '/^backtitle/,0' "${PARENT}"/software_upgrade.sh)
+  TEMPL2_CMD=$(awk '/^backtitle/,0' "${PARENT}"/software_upgrade.sh.tmp)
+  if [[ "$(echo ${TEMPL_CMD} | sha256sum)" != "$(echo ${TEMPL2_CMD} | sha256sum)" ]]; then
+    if get_answer "A new version of software_upgrade script is available, do you want to download the latest version?"; then
+      cp "${PARENT}"/software_upgrade.sh "${PARENT}/software_upgrade.sh_bkp$(date +%s)"
+      STATIC_CMD=$(awk '/#!/{x=1}/^backtitle/{exit} x' "${PARENT}"/software_upgrade.sh)
+      printf '%s\n%s\n' "$STATIC_CMD" "$TEMPL2_CMD" > "${PARENT}"/software_upgrade.sh.tmp
+      {
+        mv -f "${PARENT}"/software_upgrade.sh.tmp "${PARENT}"/software_upgrade.sh && \
+        chmod 755 "${PARENT}"/software_upgrade.sh && \
+        echo -e "\nUpdate applied successfully, please run software upgrade again!\n" && \
+        exit 0; 
+      } || {
+        echo -e "Update failed!\n\nPlease manually download latest version of software upgrade script from GitHub" && \
+        exit 1;
+      }
+    fi
+  fi
+fi
+ rm -f "${PARENT}"/software_upgrade.sh.tmp
+
 
 ###################################
 # sudo password for sudo commands #

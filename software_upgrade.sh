@@ -20,13 +20,13 @@ read -p "Update Operating System (Linux)? (yes or [no]): " INPUT
 
 case $INPUT in
   y|yes)
-        echo "Updating Operating System (Linux)... please wait"
+        echo "Updating Operating System (Linux), please wait"
         sleep 3
         sudo apt-get update        # command is used to download package information from all configured sources.
         sudo apt-get upgrade       # You run sudo apt-get upgrade to install available upgrades of all packages currently installed on the system from the sources configured via sources. list file. New packages will be installed if required to satisfy dependencies, but existing packages will never be removed
         ;;
 *)
-        echo "Skipped! The software upgrade will continue without updating the Operating System... please wait"
+        echo "Skipped! The software upgrade will continue without updating the Operating System, please wait"
         sleep 3
         ;;
 esac
@@ -35,7 +35,7 @@ esac
 # Running prereqs #
 ###################
 
-read -p "Update prereqs? (yes or [no]): " INPUT
+read -p "Update prereqs and download the latest scripts/files? (yes or [no]): " INPUT
 
 case $INPUT in
     y|yes)
@@ -44,19 +44,17 @@ case $INPUT in
         rm prereqs.sh                                                                                                            # this command will delete the last/old prereqs file
         wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
         chmod +x prereqs.sh                                                                                                      # this command will make the file executable
-   
-                echo "Downloading the latest files/scripts, please wait"
-                sleep 3
+                echo "Downloading the latest scripts/files, please wait"
                 ./prereqs.sh
                 
-        
+       sleep1 
         
         ;;
 
     *)
         
         echo "Skipped! The software upgrade will continue without updating the prereqs"
-sleep 3
+sleep 1
         
         ;;
 esac
@@ -70,8 +68,7 @@ cd ~/git/cardano-node
 
 # get list of recent releases
 # TODO: handle no-connect errors
-available=$(curl --stderr - https://github.com/input-output-hk/cardano-node/tags | \
-        grep "<a href=\"/input-output-hk/cardano-node/releases/tag/" | \
+available=$(curl --stderr - https://github.com/input-output-hk/cardano-node/tags | grep tag | grep -v dat | grep -v refs | grep releases | cut -d \/ -f6 | cut -d\" -f1 | grep -v ^$ | \
         sed -e 's/.*\"\/input-output-hk\/cardano-node\/releases\/tag\/\(.*\)\".*/\1/' | \
         while read line; do n=$((++n)) && echo "$n: " "$line "; done)
 

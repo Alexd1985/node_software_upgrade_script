@@ -4,8 +4,6 @@
 
 backtitle="EZ NODE UPDATER"
 
-# teslkjfdsoiiepowdjsafkj test test
-
 ##########################################
 # User Variables - Change as desired     #
 # command line flags override set values #

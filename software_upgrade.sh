@@ -101,17 +101,17 @@ esac
 # Running prereqs #
 ###################
 
-read -p "Update prereqs and download the latest scripts/files? (yes or [no]): " INPUT
+read -p "Update guild-deploy script and download the latest scripts/files? (yes or [no]): " INPUT
 
 case $INPUT in
     y|yes)
        
         cd ~/tmp
-        rm prereqs.sh                                                                                                            # this command will delete the last/old prereqs file
-        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/prereqs.sh  # this command will download the latest prereqs file
-        chmod +x prereqs.sh                                                                                                      # this command will make the file executable
+        rm guild-deploy.sh                                                                                                            # this command will delete the last/old prereqs file
+        wget https://raw.githubusercontent.com/cardano-community/guild-operators/master/scripts/cnode-helper-scripts/guild-deploy.sh  # this command will download the latest prereqs file
+        chmod +x guild-deploy.sh                                                                                                      # this command will make the file executable
                 echo "Downloading the latest scripts/files, please wait"
-                ./prereqs.sh
+                ./guild-deploy.sh
                 
        sleep1 
         
@@ -119,7 +119,7 @@ case $INPUT in
 
     *)
         
-        echo "Skipped! The software upgrade will continue without updating the prereqs"
+        echo "Skipped! The software upgrade will continue without updating the guild-deploy script"
 sleep 1
         
         ;;

@@ -113,7 +113,7 @@ case $INPUT in
                 echo "Downloading the latest scripts/files, please wait"
                 ./guild-deploy.sh
                 
-       sleep1 
+       sleep 1 
         
         ;;
 
